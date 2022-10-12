@@ -2,10 +2,10 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Hello World!");
 });
-app.post("/", (req, res) => {
+app.post("/api", (req, res) => {
   res.send("POST request to the homepage");
   console.log(req);
 });
