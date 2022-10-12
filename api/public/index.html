@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ld0GHYiAAAAAAoSHmbAP3zxwFGMSQBsTDtBePE4"></script>
+    <script>
+      function onClick(e) {
+        grecaptcha.ready(function () {
+          grecaptcha
+            .execute("6Ld0GHYiAAAAAAoSHmbAP3zxwFGMSQBsTDtBePE4", {
+              action: "submit",
+            })
+            .then(function (token) {
+              fetch("/api/forwardToSalesForce", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ token: token }),
+              })
+                .then(function (res) {
+                  return res.json();
+                })
+                .then((data) => {
+                  if (data === true) {
+                    window.location.href =
+                      "https://www.ashlandauction.com/li-success";
+                  } else {
+                    alert("It appears you are not human");
+                    //window.location.href = "https://www.ashlandauction.com";
+                  }
+                });
+            });
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        onClick();
+      });
+    </script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #203d85;
+        color: white;
+        font-family: "Nunito", sans-serif;
+
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+      }
+      #notice {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="notice">
+      <img
+        src="https://auctioneersoftware.s3.amazonaws.com/ash/2020/4/TFh9VK50QCogGjSh4m7RCVCJ.png"
+      />
+      <h1>One moment... Checking if you're a human!</h1>
+    </div>
+  </body>
+</html>
